@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Formulario de Reclamación</title>
   <style>
@@ -23,6 +23,7 @@
     h2 {
       color: #023e8a;
       margin-bottom: 1rem;
+      text-align: center;
     }
 
     label {
@@ -58,29 +59,41 @@
 
   <div class="form-container">
     <h2 id="tituloFormulario">Formulario de Reclamación</h2>
-    <form>
+
+    <form action="https://formsubmit.co/germananoz@gmail.com" method="POST">
+
+      <!-- Evita el captcha de Formsubmit -->
+      <input type="hidden" name="_captcha" value="false">
+
+      <!-- Redirección tras enviar -->
+      <input type="hidden" name="_next" value="https://tusitio.com/gracias.html">
+
+      <!-- Parámetro personalizado oculto para saber el tipo -->
+      <input type="hidden" name="tipo_reclamacion" id="tipoReclamacion" value="">
+
       <label for="nombre">Nombre completo</label>
-      <input type="text" id="nombre" name="nombre" required>
+      <input type="text" name="nombre" id="nombre" required>
 
       <label for="email">Correo electrónico</label>
-      <input type="email" id="email" name="email" required>
+      <input type="email" name="email" id="email" required>
 
       <label for="vuelo">Número de vuelo</label>
-      <input type="text" id="vuelo" name="vuelo" required>
+      <input type="text" name="vuelo" id="vuelo" required>
 
       <label for="descripcion">Descripción del problema</label>
-      <textarea id="descripcion" name="descripcion" rows="5" required></textarea>
+      <textarea name="descripcion" id="descripcion" rows="5" required></textarea>
 
       <button type="submit">Enviar reclamación</button>
     </form>
   </div>
 
   <script>
-    // Lee el parámetro tipo de la URL
+    // Detecta tipo desde la URL
     const params = new URLSearchParams(window.location.search);
     const tipo = params.get("tipo");
 
     const titulo = document.getElementById("tituloFormulario");
+    const inputTipo = document.getElementById("tipoReclamacion");
 
     const titulos = {
       retraso: "Reclamación por Retraso",
@@ -89,8 +102,12 @@
       contacto: "Formulario de Contacto"
     };
 
-    if (titulos[tipo]) {
+    if (tipo && titulos[tipo]) {
       titulo.textContent = titulos[tipo];
+      inputTipo.value = titulos[tipo];
+    } else {
+      titulo.textContent = "Formulario de Reclamación";
+      inputTipo.value = "Otro";
     }
   </script>
 
