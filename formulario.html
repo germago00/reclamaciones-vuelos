@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Formulario de Reclamación</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f4f8;
+      padding: 2rem;
+    }
+
+    .form-container {
+      max-width: 600px;
+      margin: auto;
+      background-color: #ffffff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #023e8a;
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+      color: #333;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-top: 0.5rem;
+    }
+
+    button {
+      margin-top: 1.5rem;
+      background-color: #0077b6;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #023e8a;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2 id="tituloFormulario">Formulario de Reclamación</h2>
+    <form>
+      <label for="nombre">Nombre completo</label>
+      <input type="text" id="nombre" name="nombre" required>
+
+      <label for="email">Correo electrónico</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="vuelo">Número de vuelo</label>
+      <input type="text" id="vuelo" name="vuelo" required>
+
+      <label for="descripcion">Descripción del problema</label>
+      <textarea id="descripcion" name="descripcion" rows="5" required></textarea>
+
+      <button type="submit">Enviar reclamación</button>
+    </form>
+  </div>
+
+  <script>
+    // Lee el parámetro tipo de la URL
+    const params = new URLSearchParams(window.location.search);
+    const tipo = params.get("tipo");
+
+    const titulo = document.getElementById("tituloFormulario");
+
+    const titulos = {
+      retraso: "Reclamación por Retraso",
+      cancelacion: "Reclamación por Cancelación",
+      equipaje: "Reclamación por Problema de Equipaje",
+      contacto: "Formulario de Contacto"
+    };
+
+    if (titulos[tipo]) {
+      titulo.textContent = titulos[tipo];
+    }
+  </script>
+
+</body>
+</html>

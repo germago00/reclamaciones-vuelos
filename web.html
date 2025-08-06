@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reclamaciones de Vuelos</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background-color: #f0f4f8;
+    }
+
+    header {
+      background-color: #0077b6;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      border-bottom: 4px solid #023e8a;
+    }
+
+    header img {
+      max-width: 150px;
+      border-radius: 12px;
+    }
+
+    main {
+      display: flex;
+      flex: 1;
+    }
+
+    .sidebar {
+      background-color: #ffffff;
+      width: 220px;
+      transition: width 0.3s;
+      overflow: hidden;
+      border-right: 2px solid #ccc;
+      border-top: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      border-radius: 0 12px 12px 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar.collapsed {
+      width: 60px;
+    }
+
+    .toggle-btn {
+      background-color: #e0e0e0;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .nav-links {
+      flex: 1;
+      display: block;
+      transition: opacity 0.3s ease;
+    }
+
+    .sidebar.collapsed .nav-links {
+      display: none;
+    }
+
+    .nav-links ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 1rem;
+    }
+
+    .nav-links li {
+      padding: 15px 20px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      color: #023e8a;
+      display: block;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+
+    .nav-links li a:hover {
+      color: #0077b6;
+    }
+
+    .content {
+      flex: 1;
+      padding: 2rem;
+      background-color: #e9f1f7;
+    }
+
+    footer {
+      background-color: #023e8a;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      border-top: 4px solid #0077b6;
+    }
+
+    .sidebar, .content, header, footer {
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="https://via.placeholder.com/150x50?text=LOGO" alt="Logo Reclamaciones de Vuelos" />
+    <h1>Reclamaciones de Vuelos</h1>
+  </header>
+
+  <main>
+    <div class="sidebar" id="sidebar">
+      <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+      <div class="nav-links" id="navLinks">
+        <ul>
+          <li><a href="formulario.html?tipo=retraso">Reclamaciones por Retrasos</a></li>
+          <li><a href="formulario.html?tipo=cancelacion">Reclamaciones por Cancelaciones</a></li>
+          <li><a href="formulario.html?tipo=equipaje">Problemas con Equipaje</a></li>
+          <li><a href="formulario.html?tipo=contacto">Contacto y Soporte</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="content">
+      <h2>Bienvenido a nuestra plataforma de reclamaciones</h2>
+      <p>Ayudamos a los pasajeros a reclamar compensaciones por retrasos, cancelaciones, overbooking y otros problemas relacionados con vuelos.</p>
+      <p>Utiliza el menú lateral para navegar por nuestras secciones. Nuestro objetivo es hacer valer tus derechos como pasajero aéreo.</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 Reclamaciones de Vuelos. Todos los derechos reservados.</p>
+    <p><a href="mailto:contacto@reclamavuelos.com" style="color: #90e0ef;">contacto@reclamavuelos.com</a> | <a href="legal.html" style="color: #90e0ef;">Aviso legal</a></p>
+  </footer>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('collapsed');
+    }
+  </script>
+
+</body>
+</html>
