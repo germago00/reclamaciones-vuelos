@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reclamaciones de Viajes</title>
+  <style>
+    :root {
+      --primary-color: #0056b3;
+      --secondary-color: #f4f6f9;
+      --text-color: #333;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--secondary-color);
+      color: var(--text-color);
+    }
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #004085;
+    }
+    nav button {
+      background-color: inherit;
+      border: none;
+      outline: none;
+      color: white;
+      padding: 14px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    nav button:hover, nav button.active {
+      background-color: #002752;
+    }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    iframe {
+      width: 100%;
+      height: 700px;
+      border: none;
+    }
+    .contact-box {
+      background-color: #e9ecef;
+      padding: 15px;
+      border-left: 4px solid var(--primary-color);
+      margin-top: 15px;
+    }
+    .btn-mail {
+      display: inline-block;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Gestión de Reclamaciones de Viajes</h1>
+    <p>Reclama la indemnización de tus vuelos, equipajes y viajes cancelados</p>
+  </header>
+
+  <nav>
+    <button class="tab-btn active" onclick="openTab(event, 'inicio')">Información</button>
+    <button class="tab-btn" onclick="openTab(event, 'reclamar')">Formulario de Reclamación</button>
+    <button class="tab-btn" onclick="openTab(event, 'contacto')">Enviar Correo Directo</button>
+  </nav>
+
+  <div class="container">
+    <div id="inicio" class="tab-content active">
+      <h2>¿Qué puedes reclamar?</h2>
+      <p>Te ayudamos a gestionar indemnizaciones por los siguientes motivos:</p>
+      <ul>
+        <li><strong>Vuelos cancelados o retrasados:</strong> Más de 3 horas de retraso en destino.</li>
+        <li><strong>Problemas con equipaje:</strong> Pérdida, deterioro o retraso en la entrega.</li>
+        <li><strong>Overbooking:</strong> Denegación de embarque por exceso de reservas.</li>
+      </ul>
+      <p>Ve a la pestaña <strong>Formulario de Reclamación</strong> para registrar tu caso.</p>
+    </div>
+
+    <div id="reclamar" class="tab-content">
+      <h2>Datos Básicos de la Reclamación</h2>
+      <p>Rellena el siguiente formulario para ponernos en contacto contigo:</p>
+      
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc_EJEMPLO_REEMPLAZAR_AQUI/viewform?embedded=true">Cargando formulario...</iframe>
+
+      <div class="contact-box">
+        <p><em>Nota: Las respuestas del formulario se enviarán directamente al correo asignado: <strong>magiacalahorra@gmail.com</strong>.</em></p>
+      </div>
+    </div>
+
+    <div id="contacto" class="tab-content">
+      <h2>Envía tu consulta por Correo Electrónico</h2>
+      <p>Si prefieres redactar un correo con tus billetes o facturas adjuntas, puedes escribirnos directamente:</p>
+      
+      <div class="contact-box">
+        <p><strong>Dirección de destino:</strong> magiacalahorra@gmail.com</p>
+        <a href="mailto:magiacalahorra@gmail.com?subject=Nueva%20Reclamacion%20de%20Viaje&body=Hola,%20necesito%20gestionar%20una%20reclamación%20con%20los%20siguientes%20datos:" class="btn-mail">Redactar correo a magiacalahorra@gmail.com</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openTab(evt, tabName) {
+      const contents = document.getElementsByClassName("tab-content");
+      for (let i = 0; i < contents.length; i++) {
+        contents[i].classList.remove("active");
+      }
+      const buttons = document.getElementsByClassName("tab-btn");
+      for (let i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove("active");
+      }
+      document.getElementById(tabName).classList.add("active");
+      evt.currentTarget.classList.add("active");
+    }
+  </script>
+
+</body>
+</html>
