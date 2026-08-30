@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bingo Web</title>
+  <style>
+    * { box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { background: #f0f2f5; margin: 0; padding: 20px; text-align: center; }
+    .container { max-width: 600px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    h1 { margin-top: 0; color: #1a73e8; }
+    .btn { padding: 12px 20px; font-size: 16px; border: none; border-radius: 6px; cursor: pointer; background: #1a73e8; color: white; font-weight: bold; margin: 5px; }
+    .btn-danger { background: #dc3545; }
+    .btn-success { background: #28a745; }
+    .hidden { display: none !important; }
+    
+    /* Selector de modo */
+    .mode-selector { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+    
+    /* Cartón de 15 números (3 filas x 5 columnas) */
+    .bingo-card { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 20px 0; }
+    .card-cell { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; background: #e9ecef; border-radius: 8px; cursor: pointer; user-select: none; }
+    .card-cell.marked { background: #28a745; color: white; transform: scale(0.95); }
+    
+    /* Bombo */
+    .current-number { font-size: 80px; font-weight: bold; color: #1a73e8; margin: 10px 0; min-height: 100px; display: flex; align-items: center; justify-content: center; }
+    .numbers-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; margin-top: 20px; }
+    .grid-cell { font-size: 12px; padding: 6px 0; background: #e9ecef; border-radius: 4px; color: #6c757d; }
+    .grid-cell.drawn { background: #1a73e8; color: white; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Pantalla de Inicio -->
+  <div id="setup-view">
+    <h1>Bingo Web</h1>
+    <p>Selecciona tu rol en la partida:</p>
+    <div class="mode-selector">
+      <button class="btn btn-success" onclick="iniciarJugador()">Soy Jugador (Ver Cartón)</button>
+      <button class="btn" onclick="iniciarMaster()">Soy Máster (Extraer Números)</button>
+    </div>
+  </div>
+
+  <!-- Vista Jugador (Cartón) -->
+  <div id="player-view" class="hidden">
+    <h2>Mi Cartón (15 Números)</h2>
+    <p>Toca un número para marcarlo o desmarcarlo.</p>
+    <div id="card" class="bingo-card"></div>
+    <button class="btn" onclick="generarNuevoCarton()">Generar Nuevo Cartón</button>
+    <button class="btn btn-danger" onclick="volverInicio()">Cambiar Rol</button>
+  </div>
+
+  <!-- Vista Máster (Bombo) -->
+  <div id="master-view" class="hidden">
+    <h2>Bombo del Máster</h2>
+    <div id="current-ball" class="current-number">--</div>
+    <button class="btn btn-success" onclick="sacarNumero()">Sacar Número</button>
+    <button class="btn btn-danger" onclick="reiniciarBombo()">Reiniciar Partida</button>
+    <button class="btn" onclick="volverInicio()">Cambiar Rol</button>
+    
+    <h3>Números Extraídos</h3>
+    <div id="master-board" class="numbers-grid"></div>
+  </div>
+</div>
+
+<script>
+  let disponibles = [];
+  let extraidos = [];
+
+  function volverInicio() {
+    document.getElementById('setup-view').classList.remove('hidden');
+    document.getElementById('player-view').classList.add('hidden');
+    document.getElementById('master-view').classList.add('hidden');
+  }
+
+  // --- LÓGICA JUGADOR ---
+  function iniciarJugador() {
+    document.getElementById('setup-view').classList.add('hidden');
+    document.getElementById('player-view').classList.remove('hidden');
+    generarNuevoCarton();
+  }
+
+  function generarNuevoCarton() {
+    const cardContainer = document.getElementById('card');
+    cardContainer.innerHTML = '';
+    
+    // Generar 15 números aleatorios únicos del 1 al 90
+    const numeros = [];
+    while (numeros.length < 15) {
+      const n = Math.floor(Math.random() * 90) + 1;
+      if (!numeros.includes(n)) numeros.push(n);
+    }
+
+    // Ordenar de menor a mayor
+    numeros.sort((a, b) => a - b);
+
+    numeros.forEach(num => {
+      const cell = document.createElement('div');
+      cell.className = 'card-cell';
+      cell.innerText = num;
+      cell.onclick = () => cell.classList.toggle('marked');
+      cardContainer.appendChild(cell);
+    });
+  }
+
+  // --- LÓGICA MÁSTER ---
+  function iniciarMaster() {
+    document.getElementById('setup-view').classList.add('hidden');
+    document.getElementById('master-view').classList.remove('hidden');
+    if (disponibles.length === 0 && extraidos.length === 0) {
+      reiniciarBombo();
+    }
+  }
+
+  function reiniciarBombo() {
+    disponibles = Array.from({length: 90}, (_, i) => i + 1);
+    extraidos = [];
+    document.getElementById('current-ball').innerText = '--';
+    renderizarTableroMaster();
+  }
+
+  function sacarNumero() {
+    if (disponibles.length === 0) {
+      alert('¡Ya han salido todos los números!');
+      return;
+    }
+    const index = Math.floor(Math.random() * disponibles.length);
+    const num = disponibles.splice(index, 1)[0];
+    extraidos.push(num);
+    
+    document.getElementById('current-ball').innerText = num;
+    renderizarTableroMaster();
+  }
+
+  function renderizarTableroMaster() {
+    const board = document.getElementById('master-board');
+    board.innerHTML = '';
+    for (let i = 1; i <= 90; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'grid-cell' + (extraidos.includes(i) ? ' drawn' : '');
+      cell.innerText = i;
+      board.appendChild(cell);
+    }
+  }
+</script>
+
+</body>
+</html>
