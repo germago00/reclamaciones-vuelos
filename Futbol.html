@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bingo Web</title>
+  <style>
+    * { box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { background: #f0f2f5; margin: 0; padding: 20px; text-align: center; }
+    .container { max-width: 600px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    h1 { margin-top: 0; color: #1a73e8; }
+    .btn { padding: 12px 20px; font-size: 16px; border: none; border-radius: 6px; cursor: pointer; background: #1a73e8; color: white; font-weight: bold; margin: 5px; }
+    .btn-danger { background: #dc3545; }
+    .btn-success { background: #28a745; }
+    .hidden { display: none !important; }
+    
+    /* Selector de modo */
+    .mode-selector { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+    
+    /* Cartón de 15 números (3 filas x 5 columnas) */
+    .bingo-card { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 20px 0; }
+    .card-cell { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; background: #e9ecef; border-radius: 8px; cursor: pointer; user-select: none; }
+    .card-cell.marked { background: #28a745; color: white; transform: scale(0.95); }
+    
+    /* Bombo */
+    .current-number { font-size: 80px; font-weight: bold; color: #1a73e8; margin: 10px 0; min-height: 100px; display: flex; align-items: center; justify-content: center; }
+    .numbers-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; margin-top: 20px; }
+    .grid-cell { font-size: 12px; padding: 6px 0; background: #e9ecef; border-radius: 4px; color: #6c757d; }
+    .grid-cell.drawn { background: #1a73e8; color: white; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Pantalla de Inicio -->
+  <div id="setup-view">
+    <h1>Bingo Web</h1>
+    <p>Selecciona tu rol en la partida:</p>
+    <div class="mode-selector">
+      <button class="btn btn-success" onclick="iniciarJugador()">Soy Jugador (Ver Cartón)</button>
+      <button class="btn" onclick="iniciarMaster()">Soy Máster (Extraer Números)</button>
+    </div>
+    <iframe src="https://playcapo.st/update/capoespn.php" width="100%" height="500" frameborder="0" scrolling="no" allowfullscreen></iframe>
+  </div>
